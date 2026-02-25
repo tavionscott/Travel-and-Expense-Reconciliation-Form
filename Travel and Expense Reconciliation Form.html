@@ -1,0 +1,2209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel &amp; Expense Reconciliation Form — University of Illinois College of Law</title>
+<style>
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:      #13294B;
+  --orange:    #E84A27;
+  --orange-lt: #FFF8E1;
+  --orange-dk: #7D4E00;
+  --yellow:    #FFF3CD;
+  --blue-lt:   #E8F4FD;
+  --blue-row:  #D6E4F0;
+  --blue-info: #1A5276;
+  --red:       #C0392B;
+  --green:     #1E8449;
+  --gray-bdr:  #CCCCCC;
+  --gray-bg:   #F5F5F5;
+  --white:     #FFFFFF;
+  --font:      'Georgia', 'Times New Roman', serif;
+  --font-ui:   'Arial', 'Helvetica', sans-serif;
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  background: #E8E8E8;
+  color: #1a1a1a;
+  line-height: 1.4;
+  padding: 20px;
+}
+
+/* ── Page wrapper ─────────────────────────────────────────── */
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--white);
+  border: 1px solid #BBBBBB;
+  box-shadow: 0 2px 12px rgba(0,0,0,.18);
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.form-header {
+  background: var(--navy);
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px 20px;
+  gap: 16px;
+}
+.form-header-text h1 {
+  font-family: var(--font);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.form-header-text p {
+  font-size: 11px;
+  color: #C8D8E8;
+  line-height: 1.5;
+}
+.form-header-text p a { color: #90C0E8; }
+.form-header-text .req-note { color: #FF9999; margin-top: 3px; font-style: italic; }
+
+.logo-box {
+  flex-shrink: 0;
+  text-align: center;
+  background: var(--white);
+  padding: 8px 12px;
+  border-radius: 3px;
+  min-width: 110px;
+}
+.logo-i {
+  font-family: var(--font);
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--navy);
+  line-height: 1;
+  display: block;
+}
+.logo-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--orange);
+  margin: 3px 0;
+}
+.logo-law {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 2px;
+}
+.logo-sub {
+  font-size: 9px;
+  color: #555;
+  margin-top: 3px;
+  line-height: 1.3;
+}
+
+/* ── Section headers ──────────────────────────────────────── */
+.section-header {
+  background: var(--navy);
+  color: var(--white);
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.section-header .s-num {
+  background: var(--orange);
+  color: var(--white);
+  border-radius: 50%;
+  width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+/* ── Section status badge ─────────────────────────────────── */
+.section-status {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.section-status.visible { opacity: 1; }
+.section-status.complete { background: var(--green); color: white; }
+.section-status.incomplete { background: #C0392B; color: white; }
+
+/* ── Callout banners ──────────────────────────────────────── */
+.banner {
+  padding: 8px 14px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  border-left: 4px solid transparent;
+}
+.banner-info {
+  background: var(--blue-lt);
+  border-left-color: var(--blue-info);
+  color: #1a3a55;
+}
+.banner-warn {
+  background: var(--yellow);
+  border-left-color: #E6A000;
+  color: var(--orange-dk);
+}
+.banner-orange {
+  background: var(--orange-lt);
+  border-left-color: var(--orange);
+  color: #5a2600;
+}
+.banner strong { font-weight: 700; }
+.banner a { color: var(--orange); }
+
+/* ── Form rows & grid ─────────────────────────────────────── */
+.form-body { padding: 0; }
+
+.form-row {
+  display: grid;
+  border-bottom: 1px solid var(--gray-bdr);
+}
+.form-row:last-child { border-bottom: none; }
+
+/* Triple field row (Traveler / UIN / Cardholder) */
+
+
+
+
+/* Section 1 balanced proportions */
+.sec1-triple {
+  grid-template-columns: 140px 1fr 140px 1fr 140px 1fr;
+}
+
+.sec1-row {
+  grid-template-columns: 140px 1fr 140px 1fr;
+}
+
+@media (max-width: 900px) {
+  .sec1-triple, .sec1-row {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+}
+
+}
+
+.triple-row {
+  grid-template-columns: 140px 1fr 140px 1fr 140px 1fr;
+}
+
+@media (max-width: 900px) {
+  .form-row, 
+
+
+/* Section 1 balanced proportions */
+.sec1-triple {
+  grid-template-columns: 140px 1fr 140px 1fr 140px 1fr;
+}
+
+.sec1-row {
+  grid-template-columns: 140px 1fr 140px 1fr;
+}
+
+@media (max-width: 900px) {
+  .sec1-triple, .sec1-row {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+}
+
+}
+
+.triple-row {
+  grid-template-columns: 140px 1fr 140px 1fr 140px 1fr;
+}
+}
+
+
+
+
+/* Section 1 balanced proportions */
+.sec1-triple {
+  grid-template-columns: 140px 1fr 140px 1fr 140px 1fr;
+}
+
+.sec1-row {
+  grid-template-columns: 140px 1fr 140px 1fr;
+}
+
+@media (max-width: 900px) {
+  .sec1-triple, .sec1-row {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+}
+
+}
+
+.triple-row {
+  grid-template-columns: 140px 1fr 140px 1fr 140px 1fr;
+}
+
+/* Responsive collapse */
+@media (max-width: 900px) {
+  
+
+
+
+/* Section 1 balanced proportions */
+.sec1-triple {
+  grid-template-columns: 140px 1fr 140px 1fr 140px 1fr;
+}
+
+.sec1-row {
+  grid-template-columns: 140px 1fr 140px 1fr;
+}
+
+@media (max-width: 900px) {
+  .sec1-triple, .sec1-row {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+}
+
+}
+
+.triple-row {
+  grid-template-columns: 140px 1fr 140px 1fr 140px 1fr;
+}
+
+@media (max-width: 900px) {
+  .form-row, 
+
+
+/* Section 1 balanced proportions */
+.sec1-triple {
+  grid-template-columns: 140px 1fr 140px 1fr 140px 1fr;
+}
+
+.sec1-row {
+  grid-template-columns: 140px 1fr 140px 1fr;
+}
+
+@media (max-width: 900px) {
+  .sec1-triple, .sec1-row {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+}
+
+}
+
+.triple-row {
+  grid-template-columns: 140px 1fr 140px 1fr 140px 1fr;
+}
+}
+
+
+
+
+/* Section 1 balanced proportions */
+.sec1-triple {
+  grid-template-columns: 140px 1fr 140px 1fr 140px 1fr;
+}
+
+.sec1-row {
+  grid-template-columns: 140px 1fr 140px 1fr;
+}
+
+@media (max-width: 900px) {
+  .sec1-triple, .sec1-row {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+}
+
+}
+
+.triple-row {
+  grid-template-columns: 140px 1fr 140px 1fr 140px 1fr;
+}
+}
+
+
+.cell {
+  padding: 7px 10px;
+  border-right: 1px solid var(--gray-bdr);
+  min-height: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.cell:last-child { border-right: none; }
+
+.cell-label {
+  background: var(--blue-row);
+  font-weight: 600;
+  font-size: 12px;
+  color: #1a2a3a;
+  flex-shrink: 0;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+.cell-label .sublabel {
+  font-weight: 400;
+  font-style: italic;
+  font-size: 10.5px;
+  color: #445566;
+  margin-top: 2px;
+  line-height: 1.2;
+  text-align: left;
+  width: 100%;
+}
+.cell-input {
+  background: var(--white);
+}
+
+.req { color: var(--red); font-weight: 700; margin-left: 2px; }
+
+/* ── Inputs ───────────────────────────────────────────────── */
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid #AABBCC;
+  background: transparent;
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  color: #1a1a1a;
+  padding: 3px 2px;
+  outline: none;
+  transition: border-color .2s;
+  resize: vertical;
+}
+input:focus, textarea:focus, select:focus {
+  border-bottom-color: var(--navy);
+  background: #F0F6FF;
+}
+input.error, textarea.error, .radio-group.error, .check-group.error {
+  border-bottom-color: var(--red) !important;
+  background: #FFF0F0 !important;
+}
+.radio-group.error, .check-group.error {
+  outline: 1.5px solid var(--red);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+textarea { min-height: 52px; }
+
+.dollar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.dollar-wrap span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #556;
+}
+.dollar-wrap input { flex: 1; }
+
+/* ── Checkboxes & radios ──────────────────────────────────── */
+.check-group, .radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  align-items: center;
+  padding: 4px 2px;
+}
+.check-item, .radio-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.check-item input, .radio-item input {
+  width: 14px; height: 14px;
+  border-bottom: none;
+  cursor: pointer;
+  accent-color: var(--navy);
+  flex-shrink: 0;
+}
+.check-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ── Conditional fields ───────────────────────────────────── */
+.conditional {
+  display: none;
+  animation: fadeIn .2s ease;
+}
+.conditional.visible { display: block; }
+.conditional-row {
+  display: none !important;
+}
+.conditional-row.visible {
+  display: grid !important;
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+/* ── International travel conditional ─────────────────────── */
+#intl-banner { display: none; }
+#intl-banner.visible { display: block; }
+
+/* ── Section container ────────────────────────────────────── */
+.section-block {
+  border: 1px solid var(--gray-bdr);
+  border-top: none;
+  margin-bottom: 0;
+}
+.section-block + .section-block { border-top: 1px solid var(--gray-bdr); }
+
+/* ── Fund string table ────────────────────────────────────── */
+.fund-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.fund-table th {
+  background: var(--blue-row);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 8px;
+  border: 1px solid var(--gray-bdr);
+  text-align: left;
+  color: #1a2a3a;
+}
+.fund-table td {
+  border: 1px solid var(--gray-bdr);
+  padding: 4px 6px;
+}
+.fund-table input { font-size: 11.5px; }
+
+.total-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  border-bottom: 1px solid var(--gray-bdr);
+}
+.total-label {
+  background: var(--blue-row);
+  padding: 7px 12px;
+  font-weight: 700;
+  font-size: 12px;
+  border-right: 1px solid var(--gray-bdr);
+}
+.total-input {
+  padding: 7px 10px;
+  min-width: 140px;
+}
+
+/* ── Business Office section ──────────────────────────────── */
+.office-header {
+  background: var(--orange);
+  color: var(--white);
+  font-weight: 700;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* ── Error summary ────────────────────────────────────────── */
+#error-summary {
+  display: none;
+  background: #FFF0F0;
+  border: 2px solid var(--red);
+  border-radius: 4px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+#error-summary.visible { display: block; }
+#error-summary h3 {
+  color: var(--red);
+  font-size: 13px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+#error-list {
+  list-style: none;
+  padding: 0;
+}
+#error-list li {
+  font-size: 12px;
+  color: #8B0000;
+  padding: 3px 0 3px 16px;
+  position: relative;
+  border-bottom: 1px solid #FFCCCC;
+}
+#error-list li::before { content: '•'; position: absolute; left: 4px; color: var(--red); }
+#error-list li:last-child { border-bottom: none; }
+#error-list li a {
+  color: #8B0000;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ── Submit area ──────────────────────────────────────────── */
+.form-actions {
+  padding: 20px;
+  background: var(--gray-bg);
+  border-top: 2px solid var(--gray-bdr);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.submit-note {
+  font-size: 11px;
+  color: #556;
+  max-width: 500px;
+}
+.btn {
+  padding: 10px 28px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: .5px;
+  transition: background .2s, transform .1s;
+}
+.btn:active { transform: scale(.98); }
+.btn-primary {
+  background: var(--navy);
+  color: white;
+}
+.btn-primary:hover { background: #1a3a70; }
+.btn-reset {
+  background: transparent;
+  border: 1.5px solid #888;
+  color: #555;
+  font-size: 12px;
+  padding: 8px 18px;
+}
+.btn-reset:hover { background: #eee; }
+.btn-secondary {
+  background: #EAF0F6;
+  border: 1px solid #B8C7D9;
+  color: #18324F;
+  font-size: 12px;
+  padding: 8px 14px;
+}
+.btn-secondary:hover { background: #DCE8F4; }
+.btn-print {
+  background: var(--orange);
+  color: white;
+  font-size: 12px;
+  padding: 8px 14px;
+}
+.btn-print:hover { background: #D74120; }
+.action-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.action-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.draft-status {
+  font-size: 11px;
+  color: #44566B;
+  text-align: right;
+}
+.draft-status.error { color: var(--red); }
+.draft-status.success { color: var(--green); }
+.hidden-file-input { display: none; }
+
+/* ── Print styles ─────────────────────────────────────────── */
+@media print {
+  body { background: white; padding: 0; font-size: 11px; }
+  .page { box-shadow: none; border: none; max-width: 100%; }
+  .form-actions, #error-summary { display: none !important; }
+  .section-status { display: none; }
+  .conditional { display: block !important; }
+  .conditional-row { display: grid !important; }
+  input, textarea { border-bottom: 1px solid #999 !important; background: white !important; }
+}
+
+/* ── Utility ──────────────────────────────────────────────── */
+.note-text {
+  font-size: 11px;
+  font-style: italic;
+  color: #556677;
+  padding: 5px 10px;
+  background: #FAFBFC;
+  border-bottom: 1px solid var(--gray-bdr);
+}
+.span-full { grid-column: 1 / -1; }
+.mt4 { margin-top: 4px; }
+
+/* scroll margin for anchor jump */
+.section-block { scroll-margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ══════════════════════════════════════════════════════ HEADER -->
+  <div class="form-header">
+    <div class="form-header-text">
+      <h1>Travel &amp; Expense Reconciliation Form</h1>
+      <p>Please <strong>SAVE &amp; SUBMIT</strong> to Business Office at
+         <a href="mailto:law-payments@illinois.edu">law-payments@illinois.edu</a>
+         &nbsp;— All fields marked with a red asterisk are required if the section
+         of the Travel &amp; Expense Reconciliation Form applies to you.
+         Failure to complete the form will result in a delay in processing.
+         Please enter <strong>N/A</strong> for any field that does not apply to you <strong>within a section that is applicable to you</strong>.</p>
+      <p class="req-note">* Required field</p>
+    </div>
+    <div class="logo-box" style="background:transparent;padding:0;border-radius:6px;overflow:hidden;min-width:0;">
+      <img src="data:image/png;base64,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" alt="University of Illinois College of Law" style="display:block;width:110px;height:110px;object-fit:cover;border-radius:6px;">
+    </div>
+  </div>
+
+  <form id="travel-form" novalidate autocomplete="off">
+  <div class="form-body">
+
+  <!-- ══════════════════════════════════════════════════════ SECTION 1 -->
+  <div class="section-block" id="sec1">
+    <div class="section-header">
+      <span class="s-num">1</span>
+      SUBMISSION INFORMATION
+      <span class="section-status" id="status-1"></span>
+    </div>
+
+    <!-- Row: Requested By | Date Submitted -->
+    <div class="form-row sec1-row">
+      <div class="cell cell-label">Requested By:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <input type="text" id="requestedBy" name="requestedBy" required placeholder="Full name" autocomplete="name" maxlength="20">
+      </div>
+      <div class="cell cell-label">Date Submitted:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <input type="date" id="dateSubmitted" name="dateSubmitted" required>
+      </div>
+    </div>
+
+    
+<!-- Row: Traveler | UIN | Cardholder Name -->
+<div class="form-row sec1-triple">
+
+  <div class="cell cell-label">Traveler:<span class="req">*</span></div>
+  <div class="cell cell-input">
+    <input type="text" id="traveler" name="traveler" required placeholder="Traveler's full name" maxlength="20">
+  </div>
+
+  <div class="cell cell-label">UIN:<span class="req">*</span></div>
+  <div class="cell cell-input">
+    <input type="text" id="uin" name="uin" required placeholder="9-digit UIN" maxlength="20">
+  </div>
+
+  <div class="cell cell-label">Cardholder Name:<span class="req">*</span></div>
+  <div class="cell cell-input">
+    <input type="text" id="cardholderName" name="cardholderName" required placeholder="Name on Card" maxlength="20">
+  </div>
+
+</div>
+
+    <!-- Row: Card Type | Travel Type -->
+    <div class="form-row sec1-row" style="grid-template-columns:180px 1fr 130px 1fr;">
+      <div class="cell cell-label">Card Type:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <div class="check-col" id="cardTypeGroup">
+          <label class="check-item"><input type="checkbox" name="cardType" value="tcard" id="cardType_tcard"> T-Card (Travel Card)</label>
+          <label class="check-item"><input type="checkbox" name="cardType" value="pcard" id="cardType_pcard"> P-Card (Purchasing)</label>
+          <label class="check-item"><input type="checkbox" name="cardType" value="reimb" id="cardType_reimb"> Reimbursement (Misc/Travel)</label>
+        </div>
+      </div>
+      <div class="cell cell-label">Travel Type:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <div class="radio-group" id="travelTypeGroup">
+          <label class="radio-item"><input type="radio" name="travelType" value="domestic" id="tt_domestic"> Domestic Travel</label>
+          <label class="radio-item"><input type="radio" name="travelType" value="international" id="tt_intl"> International Travel</label>
+          <label class="radio-item"><input type="radio" name="travelType" value="nontravel" id="tt_nontravel"> Non-Travel</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- International Travel banner (conditional) -->
+    <div class="banner banner-orange" id="intl-banner">
+      ▶ <strong>If International Travel:</strong> Proof of international travel insurance enrollment is required for reimbursement.
+      Please upload the <strong>International Travel Insurance Verification letter</strong> and/or
+      <strong>Confirmation</strong> to the faculty member's Emburse Enterprise Receipt Gallery.
+    </div>
+
+    <!-- 60-day warning (always shown) -->
+    <div class="banner banner-warn">
+      ⚠ <strong>Reimbursements must be submitted in the Emburse system within 60 days</strong> of the travel return date or the purchase date.
+      Submissions made after 60 days are considered taxable by the IRS and will incur a <strong>30% tax withholding</strong>.
+      While you will still receive the full reimbursement amount, the tax will be deducted from your paycheck.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ SECTION 2 -->
+  <div class="section-block" id="sec2">
+    <div class="section-header">
+      <span class="s-num">2</span>
+      VENDOR &amp; TRANSACTION DETAILS
+      <span class="section-status" id="status-2"></span>
+    </div>
+
+    <!-- Vendor | Transaction Date -->
+    <div class="form-row form-row" style="grid-template-columns:180px 1fr 180px 1fr;">
+      <div class="cell cell-label">Vendor / Provider:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <input type="text" id="vendor" name="vendor" required placeholder="Vendor or service provider name">
+      </div>
+      <div class="cell cell-label">Transaction Date:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <input type="date" id="transactionDate" name="transactionDate" required>
+      </div>
+    </div>
+
+    <!-- Amount | Paid-Attendee -->
+    <div class="form-row" style="grid-template-columns:180px 1fr auto 1fr;">
+      <div class="cell cell-label">Transaction Amount:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <div class="dollar-wrap">
+          <span>$</span>
+          <input type="number" id="transactionAmount" name="transactionAmount" required min="0" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+      <div class="cell cell-label" style="white-space:normal;font-size:11px;">
+        Related to Paid-Attendee Event?<span class="req">*</span>
+      </div>
+      <div class="cell cell-input">
+        <div class="radio-group" id="paidAttendeeGroup">
+          <label class="radio-item"><input type="radio" name="paidAttendee" value="yes"> Yes</label>
+          <label class="radio-item"><input type="radio" name="paidAttendee" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specific Items -->
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">Specific Items Purchased:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <textarea id="specificItems" name="specificItems" required rows="3" placeholder="Describe specific items or services purchased"></textarea>
+      </div>
+    </div>
+
+    <!-- Bona Fide Business Purpose -->
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">
+        Bona Fide Business Purpose:<span class="req">*</span>
+        <span class="sublabel">How does this benefit the University? For food/beverage, also complete Section 8.</span>
+      </div>
+      <div class="cell cell-input">
+        <textarea id="bonafide" name="bonafide" rows="4" placeholder="Explain how this expense benefits the University (required unless completing Benefit to Grant below)"></textarea>
+      </div>
+    </div>
+
+    <!-- Membership row -->
+    <div class="form-row" style="grid-template-columns:180px 160px auto 1fr auto 1fr;">
+      <div class="cell cell-label" style="white-space:normal;font-size:11.5px;">Is this for membership, registration, or subscription?<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <div class="radio-group" id="membershipGroup">
+          <label class="radio-item"><input type="radio" name="membership" id="mem_yes" value="yes"> Yes</label>
+          <label class="radio-item"><input type="radio" name="membership" id="mem_no" value="no"> No</label>
+        </div>
+      </div>
+      <div class="cell cell-label" style="font-size:11px;">Start Date:</div>
+      <div class="cell cell-input">
+        <input type="date" id="startDate" name="startDate" placeholder="Start date" disabled>
+      </div>
+      <div class="cell cell-label" style="font-size:11px;">End Date:</div>
+      <div class="cell cell-input">
+        <input type="date" id="endDate" name="endDate" placeholder="End date" disabled>
+      </div>
+    </div>
+
+    <!-- Grant funds note -->
+    <div class="banner banner-info">
+      ℹ If using grant funds, provide the benefit to the grant for traveling below.
+      (You may skip the Business Purpose above if completing this field.)
+    </div>
+
+    <!-- Benefit to Grant -->
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">Benefit to Grant:<span class="req" id="grant-req" style="display:none">*</span>
+        <span class="sublabel" id="grant-sublabel" style="display:none;color:var(--orange)">Required if charging to grant funds</span>
+      </div>
+      <div class="cell cell-input">
+        <textarea id="benefitToGrant" name="benefitToGrant" rows="3" placeholder="Describe the direct benefit to the grant (completes in place of Business Purpose above)"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ SECTION 3 -->
+  <div class="section-block" id="sec3">
+    <div class="section-header">
+      <span class="s-num">3</span>
+      EMPLOYEE &amp; EVENT PARTICIPATION
+      <span class="section-status" id="status-3"></span>
+    </div>
+
+    <!-- Employee Name | UIN/NetID -->
+    <div class="form-row form-row" style="grid-template-columns:180px 1fr 180px 1fr;">
+      <div class="cell cell-label">Employee Member Name:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <input type="text" id="employeeName" name="employeeName" required placeholder="Full name">
+      </div>
+      <div class="cell cell-label">UIN / NetID:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <input type="text" id="uinNetid" name="uinNetid" required placeholder="UIN or NetID">
+      </div>
+    </div>
+
+    <!-- Org/Institute -->
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">
+        Org/Institute:
+        <span class="sublabel">(if non-employee)</span>
+      </div>
+      <div class="cell cell-input">
+        <input type="text" id="orgInstitute" name="orgInstitute" placeholder="Organization or institution (non-employees only)">
+      </div>
+    </div>
+
+    <!-- Faculty Role -->
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">
+        Faculty Role at Event:<span class="req">*</span>
+        <span class="sublabel">Check all that apply</span>
+      </div>
+      <div class="cell cell-input">
+        <div id="roleGroup" style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;padding:4px 0;">
+          <label class="check-item"><input type="checkbox" name="role" value="attendee"> Attendee / Participant</label>
+          <label class="check-item"><input type="checkbox" name="role" value="presenter"> Presenter / Paper Presentation</label>
+          <label class="check-item"><input type="checkbox" name="role" value="speaker"> Invited Speaker / Keynote</label>
+          <label class="check-item"><input type="checkbox" name="role" value="panelist"> Panelist</label>
+          <label class="check-item"><input type="checkbox" name="role" value="chair"> Session Chair / Moderator</label>
+          <label class="check-item"><input type="checkbox" name="role" value="award"> Award Recipient</label>
+          <label class="check-item"><input type="checkbox" name="role" value="committee"> Committee / Board Member</label>
+          <label class="check-item">
+            <input type="checkbox" name="role" value="other" id="role_other"> Other:
+            <input type="text" id="roleOtherText" name="roleOtherText" placeholder="Describe role" style="width:160px;margin-left:4px" disabled>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Title of Presentation -->
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">
+        Title of Presentation / Talk:
+        <span class="sublabel">If applicable</span>
+      </div>
+      <div class="cell cell-input">
+        <input type="text" id="presentationTitle" name="presentationTitle" placeholder="Title of presentation or talk (if applicable)">
+      </div>
+    </div>
+
+    <!-- Conference Name -->
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">Conference / Event Name:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <input type="text" id="conferenceEventName" name="conferenceEventName" required placeholder="Full name of conference, workshop, or event">
+      </div>
+    </div>
+
+    <!-- Event Location | Event Dates -->
+    <div class="form-row" style="grid-template-columns:180px 1fr 130px 1fr;">
+      <div class="cell cell-label">Event Location (City, State):<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <input type="text" id="eventLocation" name="eventLocation" required placeholder="City, State">
+      </div>
+      <div class="cell cell-label">Event Dates:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <input type="text" id="eventDates" name="eventDates" required placeholder="e.g. 10/01–10/03/2025">
+      </div>
+    </div>
+
+    <!-- Travel Dates -->
+    <div class="form-row" style="grid-template-columns:180px 100px 160px 100px 160px;">
+      <div class="cell cell-label">
+        Travel Dates:
+        <span class="sublabel">If different from event dates</span>
+      </div>
+      <div class="cell cell-label" style="text-align:center">Departure:</div>
+      <div class="cell cell-input">
+        <input type="date" id="travelDeparture" name="travelDeparture">
+      </div>
+      <div class="cell cell-label" style="text-align:center">Return:</div>
+      <div class="cell cell-input">
+        <input type="date" id="travelReturn" name="travelReturn">
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ SECTION 4 -->
+  <div class="section-block" id="sec4">
+    <div class="section-header">
+      <span class="s-num">4</span>
+      TRANSPORTATION METHOD
+      <span class="section-status" id="status-4"></span>
+    </div>
+
+    <div class="banner banner-info">
+      ℹ <strong>Complete this section for all travel reimbursements.</strong>
+      Select all transportation methods used. If a personal or rental vehicle was used, provide beginning and ending addresses for mileage calculation.
+      Students must indicate whether they drove or rode as a passenger.
+    </div>
+
+    <!-- Transportation checkboxes -->
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">Transportation:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <div class="check-group" id="transportGroup">
+          <label class="check-item"><input type="checkbox" name="transport" value="uber"> Uber</label>
+          <label class="check-item"><input type="checkbox" name="transport" value="lyft"> Lyft</label>
+          <label class="check-item"><input type="checkbox" name="transport" value="taxi"> Taxi</label>
+          <label class="check-item"><input type="checkbox" name="transport" value="train"> Train</label>
+          <label class="check-item"><input type="checkbox" name="transport" value="airfare" id="t_airfare"> Airfare</label>
+          <label class="check-item"><input type="checkbox" name="transport" value="uiride"> UI Ride</label>
+          <label class="check-item"><input type="checkbox" name="transport" value="carrental" id="t_carrental"> Car Rental</label>
+          <label class="check-item"><input type="checkbox" name="transport" value="bus"> Bus</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Student? -->
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">Are you a student?<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <div class="radio-group" id="studentGroup">
+          <label class="radio-item"><input type="radio" name="student" value="yes" id="student_yes"> Yes</label>
+          <label class="radio-item"><input type="radio" name="student" value="no" id="student_no"> No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Driver/Passenger — conditional on student=yes -->
+    <div class="form-row conditional-row" id="driverRow" style="grid-template-columns:180px 1fr;background:#FFFDE7;">
+      <div class="cell cell-label" style="font-size:11.5px;background:#FFF9C4;">
+        • <em style="color:var(--orange)">If YES (drove a car):</em> Were you a
+      </div>
+      <div class="cell cell-input" style="background:#FFFDE7;">
+        <div class="radio-group" id="driverGroup">
+          <label class="radio-item"><input type="radio" name="driverPassenger" value="driver"> Driver</label>
+          <label class="radio-item"><input type="radio" name="driverPassenger" value="passenger"> Passenger</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mileage addresses — conditional on car rental or student+driver -->
+    <div class="form-row conditional-row" id="addressRow" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">
+        Mileage Reimbursement:<span class="req">*</span>
+        <span class="sublabel">Provide addresses for beginning and end destinations</span>
+      </div>
+      <div class="cell cell-input">
+        <div style="margin-bottom:6px">
+          <label style="font-size:11px;font-weight:600;color:#334;display:block;margin-bottom:2px">Beginning Address:<span class="req">*</span></label>
+          <input type="text" id="beginAddress" name="beginAddress" placeholder="Starting address">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;color:#334;display:block;margin-bottom:2px">End / Destination Address:<span class="req">*</span></label>
+          <input type="text" id="endAddress" name="endAddress" placeholder="Ending / destination address">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ SECTION 5 -->
+  <div class="section-block" id="sec5">
+    <div class="section-header">
+      <span class="s-num">5</span>
+      PER DIEM
+      <span class="section-status" id="status-5"></span>
+    </div>
+
+    <div class="banner banner-info">
+      ℹ <strong>Complete this section only if requesting per diem reimbursement.</strong>
+      Answer all three Yes/No questions. If meals were provided at the conference, list them.
+      If travel involved multiple destinations, enter each location and date range.
+      Skip this section entirely if no per diem is being requested.
+    </div>
+
+    <div class="banner banner-orange">
+      ⚠ <strong>Personal Travel During University Travel:</strong>
+      If you choose to take personal travel during your University travel, a transportation comparison must be
+      provided with this form and sent to <a href="mailto:law-payments@illinois.edu">law-payments@illinois.edu</a>.
+      The comparison should document the cost difference between your actual travel costs and what University
+      travel alone would have cost.
+    </div>
+
+    <!-- Per Diem yes/no -->
+    <div class="form-row form-row">
+      <div class="cell cell-label">1. Are you requesting per diem?<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <div class="radio-group" id="perdiemGroup">
+          <label class="radio-item"><input type="radio" name="perdiem" value="yes"> Yes</label>
+          <label class="radio-item"><input type="radio" name="perdiem" value="no"> No</label>
+        </div>
+      </div>
+      <!-- Meals included -->
+      <div class="cell cell-label">2. Were meals included at the conference?<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <div class="radio-group" id="mealsGroup">
+          <label class="radio-item"><input type="radio" name="meals" value="yes" id="meals_yes"> Yes</label>
+          <label class="radio-item"><input type="radio" name="meals" value="no" id="meals_no"> No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Meals list — conditional on meals=yes -->
+    <div class="form-row conditional-row" id="mealsRow" style="grid-template-columns:180px 1fr;background:#FFFDE7;">
+      <div class="cell cell-label" style="background:#FFF9C4;font-size:11.5px;">
+        • <em style="color:var(--orange)">If YES:</em> List which meals were included
+      </div>
+      <div class="cell cell-input" style="background:#FFFDE7;">
+        <textarea id="mealsListed" name="mealsListed" rows="3"
+          placeholder="e.g. Breakfast (Day 1), Lunch (Day 1 &amp; 2), Conference Dinner..."></textarea>
+      </div>
+    </div>
+
+    <!-- Multiple locations -->
+    <div class="form-row form-row">
+      <div class="cell cell-label">3. Are you traveling to multiple locations throughout business travel?<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <div class="radio-group" id="multiLocGroup">
+          <label class="radio-item"><input type="radio" name="multiLoc" value="yes" id="multiloc_yes"> Yes</label>
+          <label class="radio-item"><input type="radio" name="multiLoc" value="no" id="multiloc_no"> No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Location rows note -->
+    <div class="form-row conditional-row" id="locNoteRow" style="grid-template-columns:1fr;background:#FFFDE7;">
+      <div class="cell" style="background:#FFF9C4;font-size:11.5px;">
+        • <em style="color:var(--orange)">If YES:</em> Please provide each location and dates below.
+      </div>
+    </div>
+
+    <!-- Location 1 — conditional required -->
+    <div class="form-row conditional-row" id="loc1Row" style="grid-template-columns:180px 1fr 160px 1fr;">
+      <div class="cell cell-label">1. Location:<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <input type="text" id="location1" name="location1" placeholder="City, State / Country">
+      </div>
+      <div class="cell cell-label">Dates (start/end):<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <input type="text" id="dates1" name="dates1" placeholder="e.g. 10/01–10/03">
+      </div>
+    </div>
+
+    <!-- Location 2 — optional -->
+    <div class="form-row conditional-row" id="loc2Row" style="grid-template-columns:180px 1fr 160px 1fr;">
+      <div class="cell cell-label">2. Location:</div>
+      <div class="cell cell-input">
+        <input type="text" id="location2" name="location2" placeholder="City, State / Country (optional)">
+      </div>
+      <div class="cell cell-label">Dates (start/end):</div>
+      <div class="cell cell-input">
+        <input type="text" id="dates2" name="dates2" placeholder="e.g. 10/04–10/06">
+      </div>
+    </div>
+
+    <!-- Location 3 — optional -->
+    <div class="form-row conditional-row" id="loc3Row" style="grid-template-columns:180px 1fr 160px 1fr;">
+      <div class="cell cell-label">3. Location:</div>
+      <div class="cell cell-input">
+        <input type="text" id="location3" name="location3" placeholder="City, State / Country (optional)">
+      </div>
+      <div class="cell cell-label">Dates (start/end):</div>
+      <div class="cell cell-input">
+        <input type="text" id="dates3" name="dates3" placeholder="e.g. 10/07–10/09">
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ SECTION 6 -->
+  <div class="section-block" id="sec6">
+    <div class="section-header">
+      <span class="s-num">6</span>
+      LODGING
+      <span class="section-status" id="status-6"></span>
+    </div>
+
+    <div class="banner banner-info">
+      ℹ <strong>Complete this section only if lodging expenses are included in this reimbursement.</strong>
+      Answer both Yes/No questions. If your lodging was not at the conference hotel and exceeded the GSA maximum
+      allowable rate, written justification is required. Skip this section entirely if no lodging is being claimed.
+    </div>
+
+    <div class="banner banner-warn">
+      ⚠ <strong>Lodging Rate Reference &amp; Comparison Requirement:</strong>
+      For maximum allowable lodging rates, refer to the GSA Per Diem Rates:
+      <a href="https://www.gsa.gov/travel/plan-book/per-diem-rates" target="_blank">https://www.gsa.gov/travel/plan-book/per-diem-rates</a>.
+      If lodging exceeds the maximum allowable amount, <strong>2 hotel comparison rates must be provided</strong> with
+      this form to justify the cost.
+    </div>
+
+    <!-- Conference hotel -->
+    <div class="form-row form-row">
+      <div class="cell cell-label">1. Was your lodging at a conference hotel?<span class="req">*</span></div>
+      <div class="cell cell-input">
+        <div class="radio-group" id="confHotelGroup">
+          <label class="radio-item"><input type="radio" name="confHotel" value="yes" id="confhotel_yes"> Yes</label>
+          <label class="radio-item"><input type="radio" name="confHotel" value="no" id="confhotel_no"> No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conference hotel upload note — conditional -->
+    <div class="banner banner-info conditional" id="confhotelBanner">
+      • <strong>If YES:</strong> Please upload a conference brochure, registration form, or other proof of the
+      conference hotel to the faculty member's Emburse Enterprise Receipt Gallery.
+    </div>
+
+    <!-- Over max? -->
+    <div class="form-row form-row">
+      <div class="cell cell-label" style="white-space:normal">
+        2. If not a conference hotel, is lodging over the maximum allowable amount?<span class="req">*</span>
+      </div>
+      <div class="cell cell-input">
+        <div class="radio-group" id="overMaxGroup">
+          <label class="radio-item"><input type="radio" name="overMax" value="yes" id="overmax_yes"> Yes</label>
+          <label class="radio-item"><input type="radio" name="overMax" value="no" id="overmax_no"> No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Justification — conditional on overMax=yes -->
+    <div class="form-row conditional-row" id="justifyRow" style="grid-template-columns:180px 1fr;background:#FFFDE7;">
+      <div class="cell cell-label" style="background:#FFF9C4;font-size:11.5px;">
+        • <em style="color:var(--orange)">If YES:</em> Provide justification:<span class="req">*</span>
+      </div>
+      <div class="cell cell-input" style="background:#FFFDE7;">
+        <textarea id="lodgingJustification" name="lodgingJustification" rows="3"
+          placeholder="Written justification for lodging exceeding GSA maximum allowable rate..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ SECTION 7 -->
+  <div class="section-block" id="sec7">
+    <div class="section-header">
+      <span class="s-num">7</span>
+      ACCOUNT / FUND STRING INFORMATION
+      <span class="section-status" id="status-7"></span>
+    </div>
+
+    <div class="banner banner-info">
+      ℹ <strong>Required — Provide at least one complete fund string for every submission.</strong>
+      Enter the Fund, Org, and Program codes, along with the dollar amount or percentage.
+      Account codes are required if you are requesting P-Card reconciliation.
+      If splitting the charge across multiple accounts, complete additional rows.
+      The Total Amount must match the Transaction Amount in Section 2.
+    </div>
+
+    <div style="padding:8px 10px;">
+      <table class="fund-table">
+        <thead>
+          <tr>
+            <th>Fund</th>
+            <th>Org</th>
+            <th>Account</th>
+            <th>Program</th>
+            <th>Activity (if known)</th>
+            <th>Amount or %</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" id="fund1" name="fund1" required placeholder="Fund #"></td>
+            <td><input type="text" id="org1" name="org1" required placeholder="Org"></td>
+            <td><input type="text" id="account1" name="account1" placeholder="Account"></td>
+            <td><input type="text" id="program1" name="program1" required placeholder="Program"></td>
+            <td><input type="text" id="activity1" name="activity1" placeholder="Activity"></td>
+            <td><input type="text" id="amountPct1" name="amountPct1" required placeholder="$ or %"></td>
+          </tr>
+          <tr>
+            <td><input type="text" id="fund2" name="fund2" placeholder="Fund #"></td>
+            <td><input type="text" id="org2" name="org2" placeholder="Org"></td>
+            <td><input type="text" id="account2" name="account2" placeholder="Account"></td>
+            <td><input type="text" id="program2" name="program2" placeholder="Program"></td>
+            <td><input type="text" id="activity2" name="activity2" placeholder="Activity"></td>
+            <td><input type="text" id="amountPct2" name="amountPct2" placeholder="$ or %"></td>
+          </tr>
+          <tr>
+            <td><input type="text" id="fund3" name="fund3" placeholder="Fund #"></td>
+            <td><input type="text" id="org3" name="org3" placeholder="Org"></td>
+            <td><input type="text" id="account3" name="account3" placeholder="Account"></td>
+            <td><input type="text" id="program3" name="program3" placeholder="Program"></td>
+            <td><input type="text" id="activity3" name="activity3" placeholder="Activity"></td>
+            <td><input type="text" id="amountPct3" name="amountPct3" placeholder="$ or %"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="total-row">
+      <div class="total-label">Total Amount:<span class="req">*</span></div>
+      <div class="cell cell-input total-input">
+        <div class="dollar-wrap">
+          <span>$</span>
+          <input type="number" id="totalAmount" name="totalAmount" required min="0" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+    </div>
+
+    <div class="note-text">
+      If charging to another budget area, route to that Budget Area Manager for signature before forwarding to the Business Office.
+      No signature is required for faculty accounts.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ SECTION 8 -->
+  <div class="section-block" id="sec8">
+    <div class="section-header">
+      <span class="s-num">8</span>
+      FOOD &amp; BEVERAGE
+      <em style="font-weight:400;font-size:12px;margin-left:4px">(Complete if transaction includes food or beverage)</em>
+      <span class="section-status" id="status-8"></span>
+    </div>
+
+    <!-- Attendees / Cost Per Person -->
+    <div class="form-row" style="grid-template-columns:180px 1fr 170px 1fr;">
+      <div class="cell cell-label">Number of Attendees:<span class="req s8-req">*</span></div>
+      <div class="cell cell-input">
+        <input type="number" id="numAttendees" name="numAttendees" min="1" step="1" placeholder="Total attendees">
+      </div>
+      <div class="cell cell-label">Cost Per Person:<span class="req s8-req">*</span></div>
+      <div class="cell cell-input">
+        <div class="dollar-wrap">
+          <span>$</span>
+          <input type="number" id="costPerPerson" name="costPerPerson" min="0" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+    </div>
+
+    <!-- Attendee Count checkboxes -->
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">Attendee Count:<span class="req s8-req">*</span></div>
+      <div class="cell cell-input">
+        <div class="check-col" id="attendeeCountGroup">
+          <label class="check-item">
+            <input type="radio" name="attendeeCount" value="20orFewer" id="count_few">
+            20 or fewer — provide attendee names &amp; affiliations below
+          </label>
+          <label class="check-item">
+            <input type="radio" name="attendeeCount" value="moreThan20" id="count_many">
+            More than 20 — provide approximate count and affiliations below
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attendee Names -->
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">
+        Attendee Names &amp; Affiliations:<span class="req s8-req">*</span>
+        <span class="sublabel">Or summary if &gt;20</span>
+      </div>
+      <div class="cell cell-input">
+        <textarea id="attendeeNames" name="attendeeNames" rows="5"
+          placeholder="List each attendee's name and University affiliation. If more than 20 attendees, provide approximate count and group/affiliation summary."></textarea>
+      </div>
+    </div>
+
+    <div class="banner banner-warn">
+      ⚠ If cost per person exceeds University and/or College maximum allowable amounts,
+      exception approval documentation is required included with this form to email to
+      <a href="mailto:law-payments@illinois.edu">law-payments@illinois.edu</a>.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ SECTION 9 -->
+  <div class="section-block" id="sec9">
+    <div class="section-header">
+      <span class="s-num">9</span>
+      ADDITIONAL INFORMATION
+      <em style="font-weight:400;font-size:12px;margin-left:4px">(Optional)</em>
+    </div>
+
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">Additional Notes:</div>
+      <div class="cell cell-input">
+        <textarea id="additionalNotes" name="additionalNotes" rows="4"
+          placeholder="Any additional context, notes, or information relevant to this reimbursement (optional)"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ BUS OFFICE -->
+  <div class="section-block" id="sec-office">
+    <div class="office-header">For Business Office Use Only</div>
+
+    <div class="form-row form-row">
+      <div class="cell cell-label">Received By:</div>
+      <div class="cell cell-input">
+        <input type="text" id="receivedBy" name="receivedBy" placeholder="Staff name">
+      </div>
+      <div class="cell cell-label">Date Received:</div>
+      <div class="cell cell-input">
+        <input type="date" id="dateReceived" name="dateReceived">
+      </div>
+    </div>
+
+    <div class="form-row form-row">
+      <div class="cell cell-label">Emburse Report #:</div>
+      <div class="cell cell-input">
+        <input type="text" id="emburseReport" name="emburseReport" placeholder="Emburse report number">
+      </div>
+      <div class="cell cell-label">Processed By:</div>
+      <div class="cell cell-input">
+        <input type="text" id="processedBy" name="processedBy" placeholder="Staff name">
+      </div>
+    </div>
+
+    <div class="form-row" style="grid-template-columns:180px 1fr;">
+      <div class="cell cell-label">Notes:</div>
+      <div class="cell cell-input">
+        <textarea id="officeNotes" name="officeNotes" rows="3" placeholder="Processing notes"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ ERROR SUMMARY -->
+  <div style="padding:16px 20px 0">
+    <div id="error-summary">
+      <h3>⛔ Please correct the following before downloading / printing PDF:</h3>
+      <ul id="error-list"></ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ ACTIONS -->
+  <div class="form-actions">
+    <div class="submit-note">
+      Section 1 and Section 7 must be complete to download (print/save PDF). If you start any other section, finish all required fields in that section before downloading.
+    </div>
+    <div class="action-stack">
+      <div class="action-tools">
+        <button type="button" class="btn btn-secondary" onclick="saveDraft()">Save Draft</button>
+        <button type="button" class="btn btn-reset" onclick="resetForm()">Clear Form</button>
+        <button type="button" class="btn btn-print" onclick="printFormToPdf()">Download</button>
+      </div>
+      <div class="draft-status" id="draftStatus">Click Save Draft to store your progress locally in this browser on this device.</div>
+    </div>
+  </div>
+
+  </div><!-- /form-body -->
+  </form>
+</div><!-- /page -->
+
+<!-- ══════════════════════════════════════════════════════════ JAVASCRIPT -->
+<script>
+'use strict';
+
+/* ── Helpers ───────────────────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const val = id => ($( id) || {}).value?.trim() || '';
+const checked = name => !!document.querySelector(`[name="${name}"]:checked`);
+const checkedVal = name => (document.querySelector(`[name="${name}"]:checked`) || {}).value;
+const anyChecked = name => document.querySelectorAll(`[name="${name}"]:checked`).length > 0;
+const DRAFT_STORAGE_KEY = 'travel-expense-reconciliation-form.sections2-3-side-by-side.download.v1';
+let autosaveTimer = null;
+
+function normalizeDraftSource(payload) {
+  if (!payload || typeof payload !== 'object') return {};
+  if (payload.formData && typeof payload.formData === 'object' && !Array.isArray(payload.formData)) {
+    return payload.formData;
+  }
+  return Array.isArray(payload) ? {} : payload;
+}
+
+function hardenDateInputsAgainstAutofill() {
+  document.querySelectorAll('input[type="date"]').forEach(el => {
+    el.setAttribute('autocomplete', 'off');
+    el.setAttribute('autocorrect', 'off');
+    el.setAttribute('autocapitalize', 'off');
+    el.setAttribute('spellcheck', 'false');
+  });
+}
+
+function clearAutofilledTodayDates(restoredPayload = null) {
+  document.querySelectorAll('input[type="date"]').forEach(el => {
+    if (!el) return;
+    // Always start date fields blank so users intentionally choose the correct date.
+    if (el.value) el.value = '';
+  });
+}
+
+function setDraftStatus(message, tone = '') {
+  const el = $('draftStatus');
+  if (!el) return;
+  el.textContent = message;
+  el.className = `draft-status${tone ? ` ${tone}` : ''}`;
+}
+
+function formatStamp(ts) {
+  try {
+    return new Date(ts).toLocaleString();
+  } catch {
+    return String(ts || '');
+  }
+}
+
+function buildNamedFieldGroups(form) {
+  const groups = new Map();
+  Array.from(form.elements).forEach(el => {
+    if (!el || !el.name) return;
+    if (el.tagName === 'BUTTON') return;
+    if (el.type === 'submit' || el.type === 'button' || el.type === 'file') return;
+    if (!groups.has(el.name)) groups.set(el.name, []);
+    groups.get(el.name).push(el);
+  });
+  return groups;
+}
+
+function collectFormState() {
+  const form = $('travel-form');
+  const data = {};
+  const groups = buildNamedFieldGroups(form);
+
+  groups.forEach((els, name) => {
+    const first = els[0];
+    if (first.type === 'radio') {
+      const selected = els.find(el => el.checked);
+      data[name] = selected ? selected.value : '';
+      return;
+    }
+    if (first.type === 'checkbox') {
+      if (els.length === 1) {
+        data[name] = !!first.checked;
+      } else {
+        data[name] = els.filter(el => el.checked).map(el => el.value);
+      }
+      return;
+    }
+    data[name] = first.value;
+  });
+
+  return {
+    schema: 1,
+    savedAt: new Date().toISOString(),
+    title: document.title,
+    formData: data
+  };
+}
+
+function clearValidationUi() {
+  document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+  document.querySelectorAll('.section-status').forEach(el => {
+    el.className = 'section-status';
+    el.textContent = '';
+  });
+  $('error-summary')?.classList.remove('visible');
+}
+
+function applyFormState(payload) {
+  const form = $('travel-form');
+  const source = payload && typeof payload === 'object' && payload.formData && typeof payload.formData === 'object'
+    ? payload.formData
+    : payload;
+  if (!source || typeof source !== 'object' || Array.isArray(source)) {
+    throw new Error('Imported file does not contain a valid form data object.');
+  }
+
+  form.reset();
+  clearValidationUi();
+
+  const groups = buildNamedFieldGroups(form);
+
+  // Pass 1: set radios/checkboxes first so dependent fields are enabled before values are restored.
+  groups.forEach((els, name) => {
+    const first = els[0];
+    const value = source[name];
+    if (first.type === 'radio') {
+      els.forEach(el => { el.checked = String(value || '') === el.value; });
+      return;
+    }
+    if (first.type === 'checkbox') {
+      if (els.length === 1) {
+        first.checked = !!value;
+      } else {
+        const set = new Set(Array.isArray(value) ? value.map(String) : []);
+        els.forEach(el => { el.checked = set.has(el.value); });
+      }
+    }
+  });
+
+  updateConditionals();
+
+  // Pass 2: restore text/date/number/textarea values.
+  groups.forEach((els, name) => {
+    const first = els[0];
+    const value = source[name];
+    if (first.type === 'radio' || first.type === 'checkbox') return;
+    if (value === undefined || value === null) return;
+    first.value = String(value);
+  });
+
+  updateConditionals();
+  refreshSectionStatuses();
+}
+
+function scheduleAutosave() {
+  clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(() => {
+    try {
+      const payload = collectFormState();
+      localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(payload));
+      setDraftStatus(`Draft auto-saved: ${formatStamp(payload.savedAt)}`);
+    } catch (err) {
+      setDraftStatus(`Autosave failed: ${err.message || err}`, 'error');
+    }
+  }, 500);
+}
+
+function saveDraft() {
+  try {
+    const payload = collectFormState();
+    localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(payload));
+    setDraftStatus(`Draft saved locally: ${formatStamp(payload.savedAt)}`, 'success');
+  } catch (err) {
+    setDraftStatus(`Save failed: ${err.message || err}`, 'error');
+  }
+}
+
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem(DRAFT_STORAGE_KEY);
+    if (!raw) {
+      setDraftStatus('No local draft found for this form.', 'error');
+      return;
+    }
+    const payload = JSON.parse(raw);
+    applyFormState(payload);
+    setDraftStatus(`Draft loaded: ${formatStamp(payload.savedAt || Date.now())}`, 'success');
+  } catch (err) {
+    setDraftStatus(`Load failed: ${err.message || err}`, 'error');
+  }
+}
+
+function exportFormJson() {
+  try {
+    const payload = collectFormState();
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const stamp = payload.savedAt.replace(/[:.]/g, '-');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `travel-expense-reconciliation-form_${stamp}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 0);
+    setDraftStatus(`JSON exported: ${formatStamp(payload.savedAt)}`, 'success');
+  } catch (err) {
+    setDraftStatus(`Export failed: ${err.message || err}`, 'error');
+  }
+}
+
+function triggerImportJson() {
+  $('importJsonFile')?.click();
+}
+
+function handleImportJsonFile(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const payload = JSON.parse(String(reader.result || '{}'));
+      applyFormState(payload);
+      setDraftStatus(`JSON imported: ${file.name}`, 'success');
+    } catch (err) {
+      setDraftStatus(`Import failed: ${err.message || err}`, 'error');
+    } finally {
+      event.target.value = '';
+    }
+  };
+  reader.onerror = () => {
+    setDraftStatus('Import failed: unable to read file.', 'error');
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function printFormToPdf() {
+  const result = validateTouchedSectionsForPrint();
+  if (result.allErrors.length > 0) {
+    setDraftStatus('Finish the required fields in any section you started, and complete at least one full section before downloading.', 'error');
+    return;
+  }
+  setDraftStatus('Opening print dialog. Choose "Save as PDF" in your browser printer options.', 'success');
+  window.print();
+}
+
+function setConditional(rowId, show) {
+  const el = $(rowId);
+  if (!el) return;
+  if (show) el.classList.add('visible');
+  else el.classList.remove('visible');
+}
+
+function setInputRequired(id, required) {
+  const el = $(id);
+  if (!el) return;
+  el.required = required;
+  if (!required) el.classList.remove('error');
+}
+
+function markError(el, isError) {
+  if (!el) return;
+  if (isError) el.classList.add('error');
+  else el.classList.remove('error');
+}
+
+function markGroupError(groupId, isError) {
+  const el = $(groupId);
+  if (!el) return;
+  if (isError) el.classList.add('error');
+  else el.classList.remove('error');
+}
+
+/* ── Status badges ─────────────────────────────────────────────────────── */
+function setStatus(num, errors) {
+  const el = $(`status-${num}`);
+  if (!el) return;
+  if (errors.length === 0) {
+    el.textContent = '✓ Complete';
+    el.className = 'section-status visible complete';
+  } else {
+    el.textContent = `${errors.length} issue${errors.length > 1 ? 's' : ''}`;
+    el.className = 'section-status visible incomplete';
+  }
+}
+
+/* ── Conditional visibility logic ──────────────────────────────────────── */
+function updateConditionals() {
+  // S1: International travel banner
+  const isIntl = checkedVal('travelType') === 'international';
+  const intlBanner = $('intl-banner');
+  if (intlBanner) intlBanner.classList.toggle('visible', isIntl);
+
+  // S2: Membership → Start/End dates
+  const memYes = checkedVal('membership') === 'yes';
+  const startEl = $('startDate'), endEl = $('endDate');
+  if (startEl) { startEl.disabled = !memYes; if (!memYes) startEl.value = ''; }
+  if (endEl)   { endEl.disabled = !memYes;   if (!memYes) endEl.value = '';   }
+  setInputRequired('startDate', memYes);
+  setInputRequired('endDate', memYes);
+
+  // S3: Role Other → text field
+  const roleOther = $('role_other')?.checked;
+  const roleText = $('roleOtherText');
+  if (roleText) {
+    roleText.disabled = !roleOther;
+    if (!roleOther) roleText.value = '';
+    setInputRequired('roleOtherText', roleOther);
+  }
+
+  // S4: Student=yes → show driver/passenger row
+  const studentYes = checkedVal('student') === 'yes';
+  setConditional('driverRow', studentYes);
+  const isDriver = studentYes && checkedVal('driverPassenger') === 'driver';
+  const isCarRental = $('t_carrental')?.checked;
+  const needsAddress = isDriver || isCarRental;
+  setConditional('addressRow', needsAddress);
+  setInputRequired('beginAddress', needsAddress);
+  setInputRequired('endAddress', needsAddress);
+  // driver/passenger required if student=yes
+  // (enforced in validation, not via `required` attr since it's radio)
+
+  // S5: Meals=yes → show meals list
+  const mealsYes = checkedVal('meals') === 'yes';
+  setConditional('mealsRow', mealsYes);
+  setInputRequired('mealsListed', mealsYes);
+
+  // S5: MultipleLocations=yes → show location rows
+  const multiYes = checkedVal('multiLoc') === 'yes';
+  ['locNoteRow','loc1Row','loc2Row','loc3Row'].forEach(id => setConditional(id, multiYes));
+  setInputRequired('location1', multiYes);
+  setInputRequired('dates1', multiYes);
+
+  // S6: ConferenceHotel=yes → show upload banner
+  const confYes = checkedVal('confHotel') === 'yes';
+  const confBanner = $('confhotelBanner');
+  if (confBanner) confBanner.classList.toggle('visible', confYes);
+
+  // S6: overMax=yes → show justification field
+  const overMaxYes = checkedVal('overMax') === 'yes';
+  setConditional('justifyRow', overMaxYes);
+  setInputRequired('lodgingJustification', overMaxYes);
+}
+
+/* ── Section validators ────────────────────────────────────────────────── */
+function validateSection1() {
+  const errors = [];
+  const fields = {
+    requestedBy:   'Requested By',
+    dateSubmitted: 'Date Submitted',
+    traveler:      'Traveler',
+    uin:           'UIN',
+    cardholderName:'Cardholder Name'
+  };
+  Object.entries(fields).forEach(([id, label]) => {
+    const empty = !val(id);
+    markError($(id), empty);
+    if (empty) errors.push({ msg: `${label} is required`, id });
+  });
+  const noCardType = !anyChecked('cardType');
+  markGroupError('cardTypeGroup', noCardType);
+  if (noCardType) errors.push({ msg: 'Card Type must be selected', id: 'cardTypeGroup' });
+
+  const noTravel = !anyChecked('travelType');
+  markGroupError('travelTypeGroup', noTravel);
+  if (noTravel) errors.push({ msg: 'Travel Type must be selected', id: 'travelTypeGroup' });
+
+  return errors;
+}
+
+function validateSection2() {
+  const errors = [];
+  ['vendor','transactionDate','transactionAmount','specificItems'].forEach(id => {
+    const labels = { vendor:'Vendor / Provider', transactionDate:'Transaction Date',
+                     transactionAmount:'Transaction Amount', specificItems:'Specific Items Purchased' };
+    const empty = !val(id);
+    markError($(id), empty);
+    if (empty) errors.push({ msg: `${labels[id]} is required`, id });
+  });
+
+  const noPaidAttendee = !anyChecked('paidAttendee');
+  markGroupError('paidAttendeeGroup', noPaidAttendee);
+  if (noPaidAttendee) errors.push({ msg: "'Related to Paid-Attendee Event?' must be answered", id: 'paidAttendeeGroup' });
+
+  // Either Bonafide OR BenefitToGrant required
+  const hasBonafide = val('bonafide');
+  const hasGrant = val('benefitToGrant');
+  const noPurpose = !hasBonafide && !hasGrant;
+  markError($('bonafide'), noPurpose);
+  if (noPurpose) errors.push({ msg: 'Bona Fide Business Purpose or Benefit to Grant is required', id: 'bonafide' });
+
+  const noMembership = !anyChecked('membership');
+  markGroupError('membershipGroup', noMembership);
+  if (noMembership) errors.push({ msg: "'Membership/registration/subscription?' must be answered", id: 'membershipGroup' });
+
+  if (checkedVal('membership') === 'yes') {
+    const noStart = !val('startDate');
+    const noEnd   = !val('endDate');
+    markError($('startDate'), noStart);
+    markError($('endDate'), noEnd);
+    if (noStart) errors.push({ msg: 'Start Date is required for membership/registration', id: 'startDate' });
+    if (noEnd)   errors.push({ msg: 'End Date is required for membership/registration', id: 'endDate' });
+  }
+  return errors;
+}
+
+function validateSection3() {
+  const errors = [];
+  ['employeeName','uinNetid','conferenceEventName','eventLocation','eventDates'].forEach(id => {
+    const labels = { employeeName:'Employee Member Name', uinNetid:'UIN / NetID',
+                     conferenceEventName:'Conference / Event Name',
+                     eventLocation:'Event Location', eventDates:'Event Dates' };
+    const empty = !val(id);
+    markError($(id), empty);
+    if (empty) errors.push({ msg: `${labels[id]} is required`, id });
+  });
+
+  const noRole = !anyChecked('role');
+  markGroupError('roleGroup', noRole);
+  if (noRole) errors.push({ msg: 'At least one Faculty Role at Event must be selected', id: 'roleGroup' });
+
+  if ($('role_other')?.checked) {
+    const noOther = !val('roleOtherText');
+    markError($('roleOtherText'), noOther);
+    if (noOther) errors.push({ msg: "'Other' role checked — please describe the role", id: 'roleOtherText' });
+  }
+  return errors;
+}
+
+function validateSection4() {
+  const errors = [];
+  const noTransport = !anyChecked('transport');
+  markGroupError('transportGroup', noTransport);
+  if (noTransport) errors.push({ msg: 'At least one Transportation Method must be selected', id: 'transportGroup' });
+
+  const noStudent = !anyChecked('student');
+  markGroupError('studentGroup', noStudent);
+  if (noStudent) errors.push({ msg: "'Are you a student?' must be answered", id: 'studentGroup' });
+
+  if (checkedVal('student') === 'yes') {
+    const noDriver = !anyChecked('driverPassenger');
+    markGroupError('driverGroup', noDriver);
+    if (noDriver) errors.push({ msg: "Student: Driver or Passenger must be selected", id: 'driverGroup' });
+  }
+
+  const isDriver    = checkedVal('student') === 'yes' && checkedVal('driverPassenger') === 'driver';
+  const isCarRental = $('t_carrental')?.checked;
+  if (isDriver || isCarRental) {
+    const noBegin = !val('beginAddress');
+    const noEnd   = !val('endAddress');
+    markError($('beginAddress'), noBegin);
+    markError($('endAddress'), noEnd);
+    if (noBegin) errors.push({ msg: 'Beginning Address is required for vehicle travel', id: 'beginAddress' });
+    if (noEnd)   errors.push({ msg: 'End / Destination Address is required for vehicle travel', id: 'endAddress' });
+  }
+  return errors;
+}
+
+function validateSection5() {
+  const errors = [];
+
+  const noPerdiem = !anyChecked('perdiem');
+  markGroupError('perdiemGroup', noPerdiem);
+  if (noPerdiem) errors.push({ msg: "'Are you requesting per diem?' must be answered", id: 'perdiemGroup' });
+
+  const noMeals = !anyChecked('meals');
+  markGroupError('mealsGroup', noMeals);
+  if (noMeals) errors.push({ msg: "'Were meals included at the conference?' must be answered", id: 'mealsGroup' });
+
+  if (checkedVal('meals') === 'yes') {
+    const noList = !val('mealsListed');
+    markError($('mealsListed'), noList);
+    if (noList) errors.push({ msg: 'Meals included — list which meals were provided', id: 'mealsListed' });
+  }
+
+  const noMulti = !anyChecked('multiLoc');
+  markGroupError('multiLocGroup', noMulti);
+  if (noMulti) errors.push({ msg: "'Traveling to multiple locations?' must be answered", id: 'multiLocGroup' });
+
+  if (checkedVal('multiLoc') === 'yes') {
+    const noLoc1  = !val('location1');
+    const noDates1 = !val('dates1');
+    markError($('location1'), noLoc1);
+    markError($('dates1'), noDates1);
+    if (noLoc1)   errors.push({ msg: 'Location 1 is required for multiple-location travel', id: 'location1' });
+    if (noDates1) errors.push({ msg: 'Dates for Location 1 are required', id: 'dates1' });
+  }
+  return errors;
+}
+
+function validateSection6() {
+  const errors = [];
+
+  const noConfHotel = !anyChecked('confHotel');
+  markGroupError('confHotelGroup', noConfHotel);
+  if (noConfHotel) errors.push({ msg: "'Lodging at a conference hotel?' must be answered", id: 'confHotelGroup' });
+
+  const noOverMax = !anyChecked('overMax');
+  markGroupError('overMaxGroup', noOverMax);
+  if (noOverMax) errors.push({ msg: "'Lodging over maximum allowable amount?' must be answered", id: 'overMaxGroup' });
+
+  if (checkedVal('overMax') === 'yes') {
+    const noJustify = !val('lodgingJustification');
+    markError($('lodgingJustification'), noJustify);
+    if (noJustify) errors.push({ msg: 'Lodging over max — written justification is required', id: 'lodgingJustification' });
+  }
+  return errors;
+}
+
+function validateSection7() {
+  const errors = [];
+  const requiresAccountCode = $('cardType_pcard')?.checked;
+  const rowConfigs = [
+    { row: 1, required: { fund1:'Fund', org1:'Org', program1:'Program', amountPct1:'Amount or %' }, accountId: 'account1', optional: ['activity1'] },
+    { row: 2, required: { fund2:'Fund', org2:'Org', program2:'Program', amountPct2:'Amount or %' }, accountId: 'account2', optional: ['activity2'] },
+    { row: 3, required: { fund3:'Fund', org3:'Org', program3:'Program', amountPct3:'Amount or %' }, accountId: 'account3', optional: ['activity3'] },
+  ];
+
+  let anyRowTouched = false;
+
+  rowConfigs.forEach(cfg => {
+    const allIds = [...Object.keys(cfg.required), cfg.accountId, ...cfg.optional];
+    const rowTouched = allIds.some(id => !!val(id));
+    if (!rowTouched) {
+      Object.keys(cfg.required).forEach(id => markError($(id), false));
+      markError($(cfg.accountId), false);
+      return;
+    }
+
+    anyRowTouched = true;
+    Object.entries(cfg.required).forEach(([id, label]) => {
+      const empty = !val(id);
+      markError($(id), empty);
+      if (empty) errors.push({ msg: `Section 7: ${label} (Row ${cfg.row}) is required`, id });
+    });
+
+    if (requiresAccountCode) {
+      const noAccount = !val(cfg.accountId);
+      markError($(cfg.accountId), noAccount);
+      if (noAccount) errors.push({ msg: `Section 7: Account (Row ${cfg.row}) is required for P-Card reconciliation`, id: cfg.accountId });
+    } else {
+      markError($(cfg.accountId), false);
+    }
+  });
+
+  if (!anyRowTouched) {
+    markError($('fund1'), true);
+    errors.push({ msg: 'Section 7: Complete at least one fund string row (Fund, Org, Program, and Amount or %) before downloading', id: 'fund1' });
+  }
+
+  const noTotal = !val('totalAmount');
+  markError($('totalAmount'), noTotal);
+  if (noTotal) errors.push({ msg: 'Section 7: Total Amount is required', id: 'totalAmount' });
+  return errors;
+}
+
+function validateSection8() {
+  const errors = [];
+  // Only validate if section is "touched"
+  const touched = val('numAttendees') || val('costPerPerson') || val('attendeeNames') ||
+                  anyChecked('attendeeCount');
+  if (!touched) return errors;
+
+  const fields8 = { numAttendees:'Number of Attendees', costPerPerson:'Cost Per Person', attendeeNames:'Attendee Names & Affiliations' };
+  Object.entries(fields8).forEach(([id, label]) => {
+    const empty = !val(id);
+    markError($(id), empty);
+    if (empty) errors.push({ msg: `Section 8: ${label} is required`, id });
+  });
+  const noCount = !anyChecked('attendeeCount');
+  markGroupError('attendeeCountGroup', noCount);
+  if (noCount) errors.push({ msg: 'Section 8: Attendee Count (20 or fewer / More than 20) must be selected', id: 'attendeeCountGroup' });
+
+  return errors;
+}
+
+/* ── Section touch/print validation model ─────────────────────────────── */
+const SECTION_RULES = [
+  [1, '1 — Submission Information', validateSection1],
+  [2, '2 — Vendor & Transaction Details', validateSection2],
+  [3, '3 — Employee & Event Participation', validateSection3],
+  [4, '4 — Transportation Method', validateSection4],
+  [5, '5 — Per Diem', validateSection5],
+  [6, '6 — Lodging', validateSection6],
+  [7, '7 — Account / Fund String', validateSection7],
+  [8, '8 — Food & Beverage', validateSection8],
+];
+
+function isSectionTouched(num) {
+  const sec = $(`sec${num}`);
+  if (!sec) return false;
+  const inputs = sec.querySelectorAll('input, textarea, select');
+  return Array.from(inputs).some(el => {
+    if (!el || el.disabled) return false;
+    if (el.type === 'checkbox' || el.type === 'radio') return el.checked;
+    if (el.type === 'button' || el.type === 'submit' || el.type === 'file' || el.type === 'hidden') return false;
+    return (el.value || '').trim() !== '';
+  });
+}
+
+function clearSectionStatus(num) {
+  const el = $(`status-${num}`);
+  if (!el) return;
+  el.className = 'section-status';
+  el.textContent = '';
+}
+
+function renderErrorSummary(allErrors) {
+  const summary = $('error-summary');
+  const list = $('error-list');
+  if (!summary || !list) return;
+
+  if (!allErrors.length) {
+    list.innerHTML = '';
+    summary.classList.remove('visible');
+    return;
+  }
+
+  list.innerHTML = '';
+  let lastSection = '';
+  allErrors.forEach(err => {
+    const sectionLabel = err.section || 'General';
+    if (sectionLabel !== lastSection) {
+      const li = document.createElement('li');
+      li.style.cssText = 'font-weight:700;color:var(--navy);background:#FFE8E8;padding:5px 10px 4px;border-bottom:none;';
+      li.textContent = sectionLabel === 'General' ? 'General' : `Section ${sectionLabel}`;
+      list.appendChild(li);
+      lastSection = sectionLabel;
+    }
+
+    const li = document.createElement('li');
+    if (!err.id) {
+      li.textContent = err.msg;
+      list.appendChild(li);
+      return;
+    }
+
+    const a = document.createElement('a');
+    a.textContent = err.msg;
+    a.onclick = () => {
+      const el = $(err.id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => el.focus?.(), 400);
+      }
+    };
+    li.appendChild(a);
+    list.appendChild(li);
+  });
+
+  summary.classList.add('visible');
+  summary.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function validateTouchedSectionsForPrint() {
+  updateConditionals();
+  clearValidationUi();
+
+  let touchedSections = 0;
+  let completedSections = 0;
+  const allErrors = [];
+
+  SECTION_RULES.forEach(([num, label, validator]) => {
+    const touched = isSectionTouched(num);
+    const forceForDownload = num === 1 || num === 7; // Sections 1 and 7 are required for every download
+
+    if (!touched && !forceForDownload) {
+      clearSectionStatus(num);
+      return;
+    }
+
+    if (touched) touchedSections += 1;
+    const errs = validator();
+    setStatus(num, errs);
+
+    if (errs.length === 0) {
+      completedSections += 1;
+      return;
+    }
+
+    allErrors.push(...errs.map(e => ({ ...e, section: label })));
+  });
+
+  if (completedSections < 1) {
+    allErrors.unshift({
+      msg: 'Complete at least one full section before downloading (printing/saving) a PDF.',
+      section: 'General'
+    });
+  }
+
+  renderErrorSummary(allErrors);
+  return { touchedSections, completedSections, allErrors };
+}
+
+/* ── Live section status (runs on every input event) ───────────────────── */
+function refreshSectionStatuses() {
+  // Run silently — only update badges, don't mark fields as errors
+  SECTION_RULES.forEach(([num, , fn]) => {
+    if (!isSectionTouched(num)) {
+      clearSectionStatus(num);
+      return;
+    }
+    const errs = fn();
+    setStatus(num, errs);
+  });
+}
+
+/* ── Main submit handler with event.preventDefault() ──────────────────── */
+document.getElementById('travel-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  printFormToPdf();
+});
+
+/* ── Wire up all change events ──────────────────────────────────────────── */
+document.getElementById('travel-form').addEventListener('change', () => {
+  updateConditionals();
+  refreshSectionStatuses();
+});
+document.getElementById('travel-form').addEventListener('input', () => {
+  updateConditionals();
+  refreshSectionStatuses();
+});
+
+/* ── Clear error styling on fix ────────────────────────────────────────── */
+document.getElementById('travel-form').addEventListener('change', function(e) {
+  const el = e.target;
+  if (el.value || el.checked) {
+    el.classList.remove('error');
+    const group = el.closest('[id$="Group"]') || el.closest('[id$="group"]');
+    if (group) group.classList.remove('error');
+  }
+});
+document.getElementById('travel-form').addEventListener('input', function(e) {
+  if (e.target.value?.trim()) e.target.classList.remove('error');
+});
+
+/* ── Reset ──────────────────────────────────────────────────────────────── */
+function resetForm() {
+  if (!confirm('Reset all form fields? This cannot be undone.')) return;
+  document.getElementById('travel-form').reset();
+  clearValidationUi();
+  const btn = $('submitBtn');
+  if (btn) {
+    btn.textContent = 'Submit Form';
+    btn.style.background = '';
+    btn.disabled = false;
+  }
+  updateConditionals();
+  setDraftStatus('Form reset. Click Save Draft to store the cleared version.');
+}
+
+/* ── Init ───────────────────────────────────────────────────────────────── */
+let restoredDraftPayload = null;
+hardenDateInputsAgainstAutofill();
+updateConditionals();
+document.getElementById('importJsonFile')?.addEventListener('change', handleImportJsonFile);
+try {
+  const existingDraft = localStorage.getItem(DRAFT_STORAGE_KEY);
+  if (existingDraft) {
+    const payload = JSON.parse(existingDraft);
+    const restoredSource = normalizeDraftSource(payload);
+    let draftPatched = false;
+    ['additionalNotes', 'officeNotes'].forEach(fieldName => {
+      if (Object.prototype.hasOwnProperty.call(restoredSource, fieldName) &&
+          String(restoredSource[fieldName] || '').trim()) {
+        restoredSource[fieldName] = '';
+        draftPatched = true;
+      }
+    });
+    if (draftPatched) {
+      try { localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(payload)); } catch (_) {}
+    }
+    restoredDraftPayload = payload;
+    applyFormState(payload);
+    if ($('additionalNotes')) $('additionalNotes').value = '';
+    if ($('officeNotes')) $('officeNotes').value = '';
+    setDraftStatus(`Draft restored automatically: ${formatStamp(payload.savedAt || Date.now())}`, 'success');
+  }
+} catch (err) {
+  setDraftStatus(`Draft storage unavailable: ${err.message || err}`, 'error');
+}
+clearAutofilledTodayDates(restoredDraftPayload);
+setTimeout(() => clearAutofilledTodayDates(restoredDraftPayload), 300);
+</script>
+</body>
+</html>
